@@ -21,7 +21,16 @@ async function commitReplicationTransaction(conn) {
     conn.release();
 }
 
+async function rollbackReplicationTransaction(conn) {
+    const rollbackTransaction = 'rollback';
+
+    await conn.query(rollbackTransaction);
+
+    conn.release();
+}
+
 module.exports = {
     startReplicationTransaction,
     commitReplicationTransaction,
+    rollbackReplicationTransaction,
 };
