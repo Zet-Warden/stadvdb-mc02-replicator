@@ -1,8 +1,9 @@
 const { DateTime } = require('luxon');
-const { getConnectionFromNode, executeQueryFromNode } = require('../db');
+const { executeQueryFromNode } = require('../db');
 const {
     startReplicationTransaction,
     commitReplicationTransaction,
+    rollbackReplicationTransaction,
 } = require('./transaction');
 const { getEventLogs } = require('./log');
 
@@ -59,7 +60,7 @@ async function sync(node, type, publisher, publisherLastUpdate, data) {
 
     try {
         //create transaction
-        const conn = await startReplicationTransaction(node);
+        var conn = await startReplicationTransaction(node);
         await conn.query(query);
         await commitReplicationTransaction(conn);
 
@@ -68,6 +69,7 @@ async function sync(node, type, publisher, publisherLastUpdate, data) {
         console.log(`${node}: ${type} sync successful`);
     } catch (err) {
         //do error handling i.e. when node is unavailable
+        await rollbackReplicationTransaction(conn);
         console.log(err);
     }
 }
