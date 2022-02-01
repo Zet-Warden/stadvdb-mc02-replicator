@@ -1,0 +1,25 @@
+{
+  "name": "stadvdb-mc02-replicator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zet-Warden/stadvdb-mc02-replicator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zet-Warden/stadvdb-mc02-replicator/issues"
+  },
+  "homepage": "https://github.com/Zet-Warden/stadvdb-mc02-replicator#readme",
+  "dependencies": {
+    "dotenv": "^15.0.0",
+    "luxon": "^2.3.0",
+    "mysql2": "^2.3.3"
+  }
+}
