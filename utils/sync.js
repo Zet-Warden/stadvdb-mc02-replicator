@@ -75,9 +75,11 @@ async function sync(node, type, publisher, publisherLastUpdate, data) {
 }
 
 function getSyncQuery(type, { id, name, year, rank }) {
+    //prevent mysql errors from strins w/ ' or "
+    const cleanName = name.replaceAll("'", "\\'").replaceAll('"', '\\"');
     if (type === 'UPDATE') {
         var query = `   update movies
-                        set name = '${name}',
+                        set name = '${cleanName}',
                         year = ${year},
                         \`rank\` = ${rank}
                         where id = ${id};`;
@@ -86,7 +88,7 @@ function getSyncQuery(type, { id, name, year, rank }) {
                         where id = ${id};`;
     } else if (type === 'INSERT') {
         var query = `   insert into movies(id, name, year, \`rank\`)
-                        values (${id}, '${name}', ${year}, ${rank})`;
+                        values (${id}, '${cleanName}', ${year}, ${rank})`;
     }
 
     return query;
