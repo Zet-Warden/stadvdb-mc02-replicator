@@ -1,4 +1,3 @@
-const { DateTime } = require('luxon');
 const { syncNodeFromNode } = require('./utils/sync');
 const nodes = [
     {
@@ -35,6 +34,7 @@ async function syncNodes() {
 async function startSync() {
     if (!isSyncing) {
         isSyncing = true;
+
         await syncNodes();
     } else {
         console.log(
@@ -44,4 +44,5 @@ async function startSync() {
 }
 
 setInterval(startSync, 1000);
+// startSync();
 // syncNodeFromNode('NODE 2', 'NODE 1');
