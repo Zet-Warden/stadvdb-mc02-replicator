@@ -13,7 +13,7 @@ async function syncLogEvents(subscriber, publisher, logEvents) {
             id: log.id,
             node: subscriber,
             //prevent mysql errors from strins w/ ' or "
-            name: log.name.replaceAll("'", "\\'").replaceAll('"', '\\"'),
+            name: log.name.replaceAll("'", "\\'").replaceAll('"', '\\"'), // prettier-ignore
             year: log.year,
             rank: log.rank,
             oldName: log.old_name,
@@ -40,7 +40,6 @@ async function syncNodeFromNode(subscriber, publisher) {
         );
         await syncLogEvents(subscriber, publisher, subscriberOnlyEventLogs);
     } catch (err) {
-        console.log(`${publisher} UNAVAILABLE`);
         console.log('--------------------------');
         console.log(err);
     }
@@ -106,11 +105,11 @@ async function sync(node, type, publisher, publisherLastUpdate, data) {
             // console.log(query, node);
             await conn.query(query);
         }
-
-        // if (counter < 2) {
+        // if (counter < 1) {
         //     counter++;
-        //     await conn.query(`SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error for testing transaction failure';
-        // `);
+        //     await conn.query(
+        //         `SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Transaction replication simulation failure'`
+        //     );
         // }
 
         await commitReplicationTransaction(conn);

@@ -26,16 +26,21 @@ const pool3 = mysql.createPool({
 });
 
 async function getConnectionFromNode(node) {
-    switch (node) {
-        case 'NODE 1':
-            return await pool1.getConnection();
-        case 'NODE 2':
-            return await pool2.getConnection();
-        case 'NODE 3':
-            return await pool3.getConnection();
+    try {
+        switch (node) {
+            case 'NODE 1':
+                return await pool1.getConnection();
+            case 'NODE 2':
+                return await pool2.getConnection();
+            case 'NODE 3':
+                return await pool3.getConnection();
 
-        default:
-            throw 'Node specified cannot be identified.';
+            default:
+                throw 'Node specified cannot be identified.';
+        }
+    } catch (err) {
+        console.log(`${node} UNAVAILABLE`);
+        throw err;
     }
 }
 
