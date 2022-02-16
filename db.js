@@ -45,16 +45,21 @@ async function getConnectionFromNode(node) {
 }
 
 async function executeQueryFromNode(node, query) {
-    switch (node) {
-        case 'NODE 1':
-            return (await pool1.query(query))[0];
-        case 'NODE 2':
-            return (await pool2.query(query))[0];
-        case 'NODE 3':
-            return (await pool3.query(query))[0];
+    try {
+        switch (node) {
+            case 'NODE 1':
+                return (await pool1.query(query))[0];
+            case 'NODE 2':
+                return (await pool2.query(query))[0];
+            case 'NODE 3':
+                return (await pool3.query(query))[0];
 
-        default:
-            throw 'Node specified cannot be identified.';
+            default:
+                throw 'Node specified cannot be identified.';
+        }
+    } catch (err) {
+        console.log(`${node} UNAVAILABLE`);
+        throw err;
     }
 }
 
